@@ -1,17 +1,17 @@
 <div class="row shadow-lg">
-	<% @booked_slots.includes(:user, :slot).each do |bg| %>
-		<div class="col-4 mt-4 mb-3">
-			<div class="card">
-				<h5 class="card-header bg-warning text-white text-monospace"><%= bg.slot.name %></h5>
-				<div class="card-body">
-					<p><span class="font-weight-bold">Title: </span><%= bg.title %></p>
-					<p><span class="font-weight-bold">Description: </span><%= bg.description %></p>
-					<p><span class="font-weight-bold">Status: </span><%= bg.status %></p>
-					<p><span class="font-weight-bold">Provider: </span><%= bg.user.full_name %></p>
-			    <p class="text-muted">Created <%= time_ago_in_words bg.created_at %> ago</p>
-				</div>
-				<%= link_to "View bids", ad_booking_path(bg), class: "btn btn-outline-warning" %>
-			</div>
-		</div>
-	<% end %>
+  <% @booked_slots.includes(:user, :slot).each do |bg| %>
+    <div class="col-4 mt-4 mb-3">
+      <div class="card">
+        <h5 class="card-header bg-warning text-white text-monospace"><%= bg.slot.name %></h5>
+        <div class="card-body">
+          <p><span class="font-weight-bold">Title: </span><%= bg.title %></p>
+          <p><span class="font-weight-bold">Description: </span><%= bg.description %></p>
+          <p><span class="font-weight-bold">Status: </span><%= bg.status %></p>
+          <p><span class="font-weight-bold">Provider: </span><%= bg.user.full_name %></p>
+          <p class="text-muted">Created <%= time_ago_in_words bg.created_at %> ago</p>
+        </div>
+        <%= link_to "View bids", ad_booking_path(bg), class: "btn btn-outline-warning" %>
+      </div>
+    </div>
+  <% end %>
 </div>

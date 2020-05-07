@@ -1,5 +1,5 @@
 <%= form_with(model: slot, local: true) do |form| %>
-  
+
   <%= render "layouts/error", obj: slot %>
 
   <div class="form-group">
@@ -10,4 +10,5 @@
   <div class="form-group">
     <%= form.submit "Save slot", class: "btn btn-success" %>
   </div>
+
 <% end %>

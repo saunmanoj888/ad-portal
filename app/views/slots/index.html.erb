@@ -1,16 +1,16 @@
 <div class="row">
-	<% @slots.each do |slot| %>
-		<div class="col-4 mt-4">
-			<div class="card">
-		  	<h5 class="card-header bg-info text-white text-monospace"><%= slot.name %></h5>
-		  	<div class="card-body">
-			    <p class="text-muted">Created by <%= slot_creater_name(slot) %></p>
-			    <p class="text-muted">Created <%= time_ago_in_words slot.created_at %> ago</p>
-				</div>
-				<% if slot.user == current_user %>
-			  	<%= link_to "Destroy", slot, method: :delete, class: 'btn btn-outline-danger' %>
-			  <% end %>
-			</div>
-		</div>
-	<% end %>
+  <% @slots.each do |slot| %>
+    <div class="col-4 mt-4">
+      <div class="card">
+        <h5 class="card-header bg-info text-white text-monospace"><%= slot.name %></h5>
+        <div class="card-body">
+          <p class="text-muted">Created by <%= slot_creater_name(slot) %></p>
+          <p class="text-muted">Created <%= time_ago_in_words slot.created_at %> ago</p>
+        </div>
+        <% if slot.user == current_user %>
+          <%= link_to "Destroy", slot, method: :delete, class: 'btn btn-outline-danger' %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 </div>

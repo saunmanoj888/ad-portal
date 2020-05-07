@@ -1,14 +1,14 @@
 <div class="row shadow-lg p-5">
-	<% @vacant_slots.includes(:user).each do |slot| %>
-		<div class="col-6 mt-4">
-			<div class="card">
-				<h5 class="card-header bg-success text-white text-monospace"><%= slot.name %></h5>
-				<div class="card-body">
-					<p><span class="font-weight-bold">Provider: </span><%= slot.user.full_name %></p>
-			    <p class="text-muted">Created <%= time_ago_in_words slot.created_at %> ago</p>
-				</div>
-				<%= link_to "Pre Book Slot", new_ad_booking_path(slot_id: slot.id), class: "btn btn-outline-success" %>
-			</div>
-		</div>
-	<% end %>
+  <% @vacant_slots.includes(:user).each do |slot| %>
+    <div class="col-6 mt-4">
+      <div class="card">
+        <h5 class="card-header bg-success text-white text-monospace"><%= slot.name %></h5>
+        <div class="card-body">
+          <p><span class="font-weight-bold">Provider: </span><%= slot.user.full_name %></p>
+          <p class="text-muted">Created <%= time_ago_in_words slot.created_at %> ago</p>
+        </div>
+        <%= link_to "Pre Book Slot", new_ad_booking_path(slot_id: slot.id), class: "btn btn-outline-success" %>
+      </div>
+    </div>
+  <% end %>
 </div>

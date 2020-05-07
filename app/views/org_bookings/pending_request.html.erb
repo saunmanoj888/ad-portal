@@ -1,32 +1,32 @@
 <% if @pending_requests.empty? %>
 
-	<div class="alert alert-warning mt-5" role="alert">
-	  <h4 class="alert-heading">Hello <%= current_user.first_name %></h4>
-	  <hr>
-	  <p>Sorry, You have no pending bookings yet!!</p>
-	</div>
+  <div class="alert alert-warning mt-5" role="alert">
+    <h4 class="alert-heading">Hello <%= current_user.first_name %></h4>
+    <hr>
+    <p>Sorry, You have no pending bookings yet!!</p>
+  </div>
 
 <% else %>
 
-	<h2 class="h2 mt-5 text-dark text-center text-monospace">Pending Bookings</h2>
-	<div class="row justify-content-center shadow-lg">
-		<% @pending_requests.includes(:ad_booking).each do |pb| %>
-			<div class="col-8 mt-4 mb-3">
-				<div class="card">
-					<h5 class="card-header bg-warning text-white text-monospace"><%= pb.ad_booking.name %></h5>
-					<div class="card-body">
-						<p><span class="font-weight-bold">Title: </span><%= pb.ad_booking.title %></p>
-						<p><span class="font-weight-bold">Description: </span><%= pb.ad_booking.description %></p>
-						<p><span class="font-weight-bold">Status: </span><%= pb.status %></p>
-						<p><span class="font-weight-bold">Agent: </span><%= pb.ad_booking.user.full_name %></p>
-			    	<hr>
-					  <strong>Start Date : <%= pb.start_time.strftime("%a") %>, <%= pb.start_time.day.ordinalize %> <%= pb.start_time.strftime("%B %Y") %></strong><br>
-					  <strong>End Date : <%= pb.end_time.strftime("%a") %>, <%= pb.end_time.day.ordinalize %> <%= pb.end_time.strftime("%B %Y") %></strong>
-					</div>
-					<%= link_to "edit booking", edit_org_booking_path(pb), class: "btn btn-outline-warning" %>
-				</div>
-			</div>
-		<% end %>
-	</div>
+  <h2 class="h2 mt-5 text-dark text-center text-monospace">Pending Bookings</h2>
+  <div class="row justify-content-center shadow-lg">
+    <% @pending_requests.includes(:ad_booking).each do |pb| %>
+      <div class="col-8 mt-4 mb-3">
+        <div class="card">
+          <h5 class="card-header bg-warning text-white text-monospace"><%= pb.ad_booking.name %></h5>
+          <div class="card-body">
+            <p><span class="font-weight-bold">Title: </span><%= pb.ad_booking.title %></p>
+            <p><span class="font-weight-bold">Description: </span><%= pb.ad_booking.description %></p>
+            <p><span class="font-weight-bold">Status: </span><%= pb.status %></p>
+            <p><span class="font-weight-bold">Agent: </span><%= pb.ad_booking.user.full_name %></p>
+            <hr>
+            <strong>Start Date : <%= pb.start_time.strftime("%a") %>, <%= pb.start_time.day.ordinalize %> <%= pb.start_time.strftime("%B %Y") %></strong><br>
+            <strong>End Date : <%= pb.end_time.strftime("%a") %>, <%= pb.end_time.day.ordinalize %> <%= pb.end_time.strftime("%B %Y") %></strong>
+          </div>
+          <%= link_to "edit booking", edit_org_booking_path(pb), class: "btn btn-outline-warning" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
 <% end %>

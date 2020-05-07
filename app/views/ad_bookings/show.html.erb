@@ -1,42 +1,42 @@
 <% if @agent_booking.status == 'occupied' %>
 
-	<div class="alert alert-success mt-5" role="alert">
-	  <h4 class="alert-heading">Congrats!</h4>
-	  <p>This slot was successfully pre booked by
-	  	<span class=""><%= @accepted_booking.user.full_name %>.</span>
-	  </p>
-	  <hr>
-	  <strong>Start Date : <%= @accepted_booking.start_time.strftime("%a") %>, <%= @accepted_booking.start_time.day.ordinalize %> <%= @accepted_booking.start_time.strftime("%B %Y") %></strong><br>
-	  <strong>End Date : <%= @accepted_booking.end_time.strftime("%a") %>, <%= @accepted_booking.end_time.day.ordinalize %> <%= @accepted_booking.end_time.strftime("%B %Y") %></strong>
-	</div>
+  <div class="alert alert-success mt-5" role="alert">
+    <h4 class="alert-heading">Congrats!</h4>
+    <p>This slot was successfully pre booked by
+      <span class=""><%= @accepted_booking.user.full_name %>.</span>
+    </p>
+    <hr>
+    <strong>Start Date : <%= @accepted_booking.start_time.strftime("%a") %>, <%= @accepted_booking.start_time.day.ordinalize %> <%= @accepted_booking.start_time.strftime("%B %Y") %></strong><br>
+    <strong>End Date : <%= @accepted_booking.end_time.strftime("%a") %>, <%= @accepted_booking.end_time.day.ordinalize %> <%= @accepted_booking.end_time.strftime("%B %Y") %></strong>
+  </div>
 
 <% elsif @agent_booking.org_bookings.empty? %>
 
-	<div class="alert alert-warning mt-5" role="alert">
-	  <h4 class="alert-heading">Hello <%= current_user.first_name %></h4>
-	  <hr>
-	  <p>Sorry, there is currently no bid for this booking!!</p>
-	</div>
+  <div class="alert alert-warning mt-5" role="alert">
+    <h4 class="alert-heading">Hello <%= current_user.first_name %></h4>
+    <hr>
+    <p>Sorry, there is currently no bid for this booking!!</p>
+  </div>
 
 <% else %>
 
-	<h2 class="h2 mt-5 text-dark text-center text-monospace">Available Bids</h2>
-	<div class="row justify-content-center shadow-lg">
-		<% @agent_booking.org_bookings.includes(:user).each do |booking| %>
-			<div class="col-8 mt-4 mb-3">
-				<div class="card">
-					<h5 class="card-header bg-warning text-white text-monospace"><%= @agent_booking.name %></h5>
-					<div class="card-body">
-						<p><span class="font-weight-bold">Rent Amount: </span><%= number_to_currency(booking.rent_amount) %></p>
-						<p><span class="font-weight-bold">Organisation(User): </span><%= booking.user.full_name %></p>
-						<hr>
-					  <strong>Start Date : <%= booking.start_time.strftime("%a") %>, <%= booking.start_time.day.ordinalize %> <%= booking.start_time.strftime("%B %Y") %></strong><br>
-					  <strong>End Date : <%= booking.end_time.strftime("%a") %>, <%= booking.end_time.day.ordinalize %> <%= booking.end_time.strftime("%B %Y") %></strong>
-					</div>
-					<%= link_to "Accept bid", accept_bid_path(id: @agent_booking.id, org_booking_id: booking.id), class: "btn btn-outline-warning" %>
-				</div>
-			</div>
-		<% end %>
-	</div>
+  <h2 class="h2 mt-5 text-dark text-center text-monospace">Available Bids</h2>
+  <div class="row justify-content-center shadow-lg">
+    <% @agent_booking.org_bookings.includes(:user).each do |booking| %>
+      <div class="col-8 mt-4 mb-3">
+        <div class="card">
+          <h5 class="card-header bg-warning text-white text-monospace"><%= @agent_booking.name %></h5>
+          <div class="card-body">
+            <p><span class="font-weight-bold">Rent Amount: </span><%= number_to_currency(booking.rent_amount) %></p>
+            <p><span class="font-weight-bold">Organisation(User): </span><%= booking.user.full_name %></p>
+            <hr>
+            <strong>Start Date : <%= booking.start_time.strftime("%a") %>, <%= booking.start_time.day.ordinalize %> <%= booking.start_time.strftime("%B %Y") %></strong><br>
+            <strong>End Date : <%= booking.end_time.strftime("%a") %>, <%= booking.end_time.day.ordinalize %> <%= booking.end_time.strftime("%B %Y") %></strong>
+          </div>
+          <%= link_to "Accept bid", accept_bid_path(id: @agent_booking.id, org_booking_id: booking.id), class: "btn btn-outline-warning" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
 <% end %>

@@ -4,24 +4,24 @@ class OrgBookingsController < ApplicationController
   before_action :authenticate_user_type
 
   def index
-  	ad_booking_ids = OrgBooking.where(user_id: current_user.id).where("end_time >= ?", DateTime.now).pluck(:ad_booking_id)
-  	@agent_bookings = AdBooking.where.not(id: ad_booking_ids).where(status: 'vacant')
+    ad_booking_ids = OrgBooking.where(user_id: current_user.id).where("end_time >= ?", DateTime.now).pluck(:ad_booking_id)
+    @agent_bookings = AdBooking.where.not(id: ad_booking_ids).where(status: 'vacant')
   end
 
   def new
-  	@ad_booking = AdBooking.find(params[:ad_booking_id])
-  	@org_booking = OrgBooking.new
+    @ad_booking = AdBooking.find(params[:ad_booking_id])
+    @org_booking = OrgBooking.new
   end
 
   def create
-  	@org_booking = OrgBooking.new(org_booking_params)
+    @org_booking = OrgBooking.new(org_booking_params)
 
-  	if @org_booking.save
+    if @org_booking.save
       OrganisationMailer.delay.slot_bidding_mail(@org_booking.slot_id, current_user)
-  		redirect_to org_bookings_path, notice: 'Pre Booked Slot was successfully created. You will be notified once Agent accepts the offer'
-  	else
-  		render :new
-  	end
+      redirect_to org_bookings_path, notice: 'Pre Booked Slot was successfully created. You will be notified once Agent accepts the offer'
+    else
+      render :new
+    end
   end
 
   def edit
