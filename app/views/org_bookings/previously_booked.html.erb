@@ -1,0 +1,31 @@
+<% if @previously_booked_slots.empty? %>
+
+	<div class="alert alert-secondary mt-5" role="alert">
+	  <h4 class="alert-heading">Hello <%= current_user.first_name %></h4>
+	  <hr>
+	  <p>Sorry, You haven't booked any slots yet!!</p>
+	</div>
+
+<% else %>
+
+	<h2 class="h2 mt-5 text-dark text-center text-monospace">Previously Booked Slots</h2>
+	<div class="row justify-content-center shadow-lg">
+		<% @previously_booked_slots.includes(:ad_booking).each do |pbs| %>
+			<div class="col-8 mt-4 mb-3">
+				<div class="card">
+					<h5 class="card-header bg-secondary text-white text-monospace"><%= pbs.ad_booking.name %></h5>
+					<div class="card-body">
+						<p><span class="font-weight-bold">Title: </span><%= pbs.ad_booking.title %></p>
+						<p><span class="font-weight-bold">Description: </span><%= pbs.ad_booking.description %></p>
+						<p><span class="font-weight-bold">Status: </span><%= pbs.status %></p>
+						<p><span class="font-weight-bold">Agent: </span><%= pbs.ad_booking.user.full_name %></p>
+			    	<hr>
+					  <strong>Start Date : <%= pbs.start_time.strftime("%a") %>, <%= pbs.start_time.day.ordinalize %> <%= pbs.start_time.strftime("%B %Y") %></strong><br>
+					  <strong>End Date : <%= pbs.end_time.strftime("%a") %>, <%= pbs.end_time.day.ordinalize %> <%= pbs.end_time.strftime("%B %Y") %></strong>
+					</div>
+				</div>
+			</div>
+		<% end %>
+	</div>
+
+<% end %>

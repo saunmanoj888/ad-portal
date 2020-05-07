@@ -1,0 +1,12 @@
+<div class="row">
+	<% @slots.each do |slot| %>
+		<div class="col-4 mt-4">
+			<div class="card">
+		  	<h5 class="card-header bg-info text-white text-monospace"><%= slot.name %></h5>
+		  	<div class="card-body">
+			    <p class="text-muted">Created <%= time_ago_in_words slot.created_at %> ago</p>
+				</div>
+			</div>
+		</div>
+	<% end %>
+</div>

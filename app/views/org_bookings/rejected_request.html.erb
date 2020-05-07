@@ -1,0 +1,31 @@
+<% if @rejected_requests.empty? %>
+
+	<div class="alert alert-secondary mt-5" role="alert">
+	  <h4 class="alert-heading">Hello <%= current_user.first_name %></h4>
+	  <hr>
+	  <p>Sorry, You have no rejected slots yet!!</p>
+	</div>
+
+<% else %>
+
+	<h2 class="h2 mt-5 text-dark text-center text-monospace">Rejected Bookings</h2>
+	<div class="row justify-content-center shadow-lg">
+		<% @rejected_requests.includes(:ad_booking).each do |rr| %>
+			<div class="col-8 mt-4 mb-3">
+				<div class="card">
+					<h5 class="card-header bg-danger text-white text-monospace"><%= rr.ad_booking.name %></h5>
+					<div class="card-body">
+						<p><span class="font-weight-bold">Title: </span><%= rr.ad_booking.title %></p>
+						<p><span class="font-weight-bold">Description: </span><%= rr.ad_booking.description %></p>
+						<p><span class="font-weight-bold">Status: </span><%= rr.status %></p>
+						<p><span class="font-weight-bold">Agent: </span><%= rr.ad_booking.user.full_name %></p>
+			    	<hr>
+					  <strong>Start Date : <%= rr.start_time.strftime("%a") %>, <%= rr.start_time.day.ordinalize %> <%= rr.start_time.strftime("%B %Y") %></strong><br>
+					  <strong>End Date : <%= rr.end_time.strftime("%a") %>, <%= rr.end_time.day.ordinalize %> <%= rr.end_time.strftime("%B %Y") %></strong>
+					</div>
+				</div>
+			</div>
+		<% end %>
+	</div>
+
+<% end %>

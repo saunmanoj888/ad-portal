@@ -1,0 +1,31 @@
+<% if @accepted_requests.empty? %>
+
+	<div class="alert alert-primary mt-5" role="alert">
+	  <h4 class="alert-heading">Hello <%= current_user.first_name %></h4>
+	  <hr>
+	  <p>Sorry, You haven't booked any slots yet!!</p>
+	</div>
+
+<% else %>
+
+	<h2 class="h2 mt-5 text-dark text-center text-monospace">Pre Booked Slots</h2>
+	<div class="row justify-content-center shadow-lg">
+		<% @accepted_requests.includes(:ad_booking).each do |ar| %>
+			<div class="col-8 mt-4 mb-3">
+				<div class="card">
+					<h5 class="card-header bg-primary text-white text-monospace"><%= ar.ad_booking.name %></h5>
+					<div class="card-body">
+						<p><span class="font-weight-bold">Title: </span><%= ar.ad_booking.title %></p>
+						<p><span class="font-weight-bold">Description: </span><%= ar.ad_booking.description %></p>
+						<p><span class="font-weight-bold">Status: </span><%= ar.status %></p>
+						<p><span class="font-weight-bold">Agent: </span><%= ar.ad_booking.user.full_name %></p>
+			    	<hr>
+					  <strong>Start Date : <%= ar.start_time.strftime("%a") %>, <%= ar.start_time.day.ordinalize %> <%= ar.start_time.strftime("%B %Y") %></strong><br>
+					  <strong>End Date : <%= ar.end_time.strftime("%a") %>, <%= ar.end_time.day.ordinalize %> <%= ar.end_time.strftime("%B %Y") %></strong>
+					</div>
+				</div>
+			</div>
+		<% end %>
+	</div>
+
+<% end %>

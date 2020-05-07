@@ -1,0 +1,29 @@
+<%= form_with(model: org_booking, local: true) do |form| %>
+  
+  <%= render "layouts/error", obj: org_booking %>
+
+  <div class="form-group">
+    <%= form.label :rent_amount %>
+    <%= form.number_field :rent_amount, min: 1, class: "form-control" %>
+  </div>
+
+  <%= form.hidden_field :slot_id, value: ad_booking.try(:slot_id) %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <%= form.hidden_field :ad_booking_id, value: ad_booking.try(:id) %>
+
+  <div class="form-group">
+    <%= form.label :start_time %>
+    <%= form.text_field :start_time, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :end_time %>
+    <%= form.text_field :end_time, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit "Pre book the slot", class: "btn btn-danger" %>
+  </div>
+  <div class="ad-content" data-unavailable="<%= current_user.unavailable_dates.to_json %>"></div>
+
+<% end %>

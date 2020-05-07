@@ -1,0 +1,22 @@
+<%= form_with(model: ad_booking, local: true) do |form| %>
+
+  <%= render "layouts/error", obj: ad_booking %>
+
+  <div class="form-group">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_field :description, class: "form-control" %>
+  </div>
+
+  <%= form.hidden_field :slot_id, value: slot.try(:id) %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <div class="form-group">
+    <%= form.submit "Pre book the slot", class: "btn btn-success" %>
+  </div>
+
+<% end %>

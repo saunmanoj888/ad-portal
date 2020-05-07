@@ -1,0 +1,33 @@
+<% if @agent_bookings.empty? %>
+
+	<div class="alert alert-danger mt-5" role="alert">
+	  <h4 class="alert-heading">Hello <%= current_user.first_name %></h4>
+	  <hr>
+	  <p>Sorry, no bookings are available at this time!!</p>
+	</div>
+
+<% else %>
+
+	<h2 class="h2 mt-5 text-dark text-center text-monospace">Available Bookings</h2>
+	<div class="row justify-content-center shadow-lg">
+		<% @agent_bookings.includes(:user).each do |booking| %>
+			<div class="col-8 mt-4 mb-3">
+				<div class="card">
+					<h5 class="card-header bg-danger text-white text-monospace"><%= booking.name %></h5>
+					<div class="card-body">
+						<p><span class="font-weight-bold">Title: </span><%= booking.title %></p>
+						<p><span class="font-weight-bold">Description: </span><%= booking.description %></p>
+						<p><span class="font-weight-bold">Status: </span><%= booking.status %></p>
+						<p><span class="font-weight-bold">Agent: </span><%= booking.user.full_name %></p>
+			    	<p class="text-muted">Created <%= time_ago_in_words booking.created_at %> ago</p>
+					</div>
+					<%= link_to "Pre Booked Slot on rent", new_org_booking_path(ad_booking_id: booking.id), class: "btn btn-outline-danger" %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+
+<% end %>
+
+
+
