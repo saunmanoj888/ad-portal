@@ -23,7 +23,7 @@ class AdBookingsController < ApplicationController
 
     if @ad_booking.save
       AgentMailer.delay.slot_booking_mail(@ad_booking, current_user)
-      redirect_to ad_bookings_path, notice: 'Pre Booked Slot was successfully created.'
+      redirect_to ad_bookings_path, notice: 'Slot was successfully Pre Booked.'
     else
       render :new
     end
@@ -43,7 +43,7 @@ class AdBookingsController < ApplicationController
       message = { notice: 'Bid accepted successfully' }
     else
       OrganisationMailer.delay.date_change_mail(org_booking.user_id, org_booking.slot_id)
-      message = { alert: 'Dates overlapping. Emailed User to changed the dates' }
+      message = { alert: 'Dates overlapping. Emailed User to change the dates' }
     end
     redirect_to ad_booking_path(agent_booking), message
   end

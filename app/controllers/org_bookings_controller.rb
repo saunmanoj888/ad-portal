@@ -18,7 +18,7 @@ class OrgBookingsController < ApplicationController
 
     if @org_booking.save
       OrganisationMailer.delay.slot_bidding_mail(@org_booking.slot_id, current_user)
-      redirect_to org_bookings_path, notice: 'Pre Booked Slot was successfully created. You will be notified once Agent accepts the offer'
+      redirect_to org_bookings_path, notice: 'Bid was successfully generated. You will be notified once Agent accepts the offer'
     else
       render :new
     end
@@ -32,7 +32,7 @@ class OrgBookingsController < ApplicationController
   def update
     @org_booking = OrgBooking.find(params[:id])
     if @org_booking.update(org_booking_params)
-      redirect_to org_bookings_path, notice: 'Pre Booked Slot was successfully updated. You will be notified once Agent accepts the offer'
+      redirect_to org_bookings_path, notice: 'Bid was successfully updated. You will be notified once Agent accepts the offer'
     else
       render :edit
     end
@@ -62,7 +62,7 @@ class OrgBookingsController < ApplicationController
 
   def authenticate_user_type
     unless current_user.organisations?
-      redirect_to root_path, alert: 'Access denied. You are not ad organisations'
+      redirect_to root_path, alert: 'Access denied. You are not an organisation'
     end
   end
 
