@@ -7,7 +7,7 @@
 					<p><span class="font-weight-bold">Provider: </span><%= slot.user.full_name %></p>
 			    <p class="text-muted">Created <%= time_ago_in_words slot.created_at %> ago</p>
 				</div>
-				<%= link_to "Pre Booked Slots", new_ad_booking_path(slot_id: slot.id), class: "btn btn-outline-success" %>
+				<%= link_to "Pre Book Slot", new_ad_booking_path(slot_id: slot.id), class: "btn btn-outline-success" %>
 			</div>
 		</div>
 	<% end %>

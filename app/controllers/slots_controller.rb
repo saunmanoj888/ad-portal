@@ -22,6 +22,17 @@ class SlotsController < ApplicationController
   	end
   end
 
+  def destroy
+    slot = Slot.find(params[:id])
+    ad_booking = AdBooking.where(slot_id: slot.id)
+    if ad_booking.empty? && slot.destroy
+      message = { notice: 'Slot was successfully destroyed.' }
+    else
+      message = { alert: 'Slot cannot be destroyed since it has existing bookings.' }
+    end
+    redirect_to slots_path, message
+  end
+
   private
 
   def authenticate_user_type
