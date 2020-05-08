@@ -50,45 +50,45 @@ class AdBookingsController < ApplicationController
 
   private
 
-  def accept_bid_and_send_confirmation_mail(org_booking)
-    org_booking.update_attribute(:status, 'accepted')
-    OrganisationMailer.delay.bid_confirmation_mail(org_booking.user_id, org_booking.slot_id)
-  end
-
-  def reject_bid_and_send_rejection_mail(agent_booking, org_booking)
-    rejected_bookings = agent_booking.org_bookings.where.not(id: params[:org_booking_id])
-    rejected_bookings.update_all(status: 'rejected')
-    rejected_user_ids = rejected_bookings.pluck(:user_id)
-    rejected_user_ids.each do |user_id|
-      OrganisationMailer.delay.bid_rejection_mail(user_id, org_booking.slot_id)
+    def accept_bid_and_send_confirmation_mail(org_booking)
+      org_booking.update_attribute(:status, 'accepted')
+      OrganisationMailer.delay.bid_confirmation_mail(org_booking.user_id, org_booking.slot_id)
     end
-  end
 
-  def authenticate_user_type
-    unless current_user.ad_space_agent?
-      redirect_to root_path, alert: 'Access denied. You are not ad space agent'
-    end
-  end
-
-  def ad_bookings_params
-    params.require(:ad_booking).permit(:title, :description, :slot_id, :user_id)
-  end
-
-  def validate_organisation_bid(org_booking)
-    bookings = OrgBooking.where(status: 'accepted')
-    date_ranges = bookings.map { |b| b.start_time..b.end_time }
-
-    date_ranges.each do |range|
-      if (range.include?(org_booking.start_time) || range.include?(org_booking.end_time))
-        return false
+    def reject_bid_and_send_rejection_mail(agent_booking, org_booking)
+      rejected_bookings = agent_booking.org_bookings.where.not(id: params[:org_booking_id])
+      rejected_bookings.update_all(status: 'rejected')
+      rejected_user_ids = rejected_bookings.pluck(:user_id)
+      rejected_user_ids.each do |user_id|
+        OrganisationMailer.delay.bid_rejection_mail(user_id, org_booking.slot_id)
       end
-      return true
     end
-  end
 
-  def find_accepted_booking
-    @agent_booking = AdBooking.find(params[:id])
-    @accepted_booking = @agent_booking.org_bookings.where(status: 'accepted').take
-  end
+    def authenticate_user_type
+      unless current_user.ad_space_agent?
+        redirect_to root_path, alert: 'Access denied. You are not ad space agent'
+      end
+    end
+
+    def ad_bookings_params
+      params.require(:ad_booking).permit(:title, :description, :slot_id, :user_id)
+    end
+
+    def validate_organisation_bid(org_booking)
+      bookings = OrgBooking.where(status: 'accepted')
+      date_ranges = bookings.map { |b| b.start_time..b.end_time }
+
+      date_ranges.each do |range|
+        if (range.include?(org_booking.start_time) || range.include?(org_booking.end_time))
+          return false
+        end
+        return true
+      end
+    end
+
+    def find_accepted_booking
+      @agent_booking = AdBooking.find(params[:id])
+      @accepted_booking = @agent_booking.org_bookings.where(status: 'accepted').take
+    end
 
 end

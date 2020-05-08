@@ -8,14 +8,14 @@ class PublicController < ApplicationController
 
   private
 
-  def user_path
-    if current_user.ad_space_provider?
-      slots_path
-    elsif current_user.ad_space_agent?
-      vacant_slots_path
-    else
-      org_bookings_path
+    def user_path
+      if current_user.ad_space_provider?
+        slots_path
+      elsif current_user.ad_space_agent?
+        vacant_slots_path
+      else
+        org_bookings_path
+      end
     end
-  end
 
 end

@@ -35,15 +35,15 @@ class SlotsController < ApplicationController
 
   private
 
-  def authenticate_user_type
-    unless current_user.ad_space_provider?
-      redirect_to root_path, alert: 'Access denied. You are not ad space provider'
+    def authenticate_user_type
+      unless current_user.ad_space_provider?
+        redirect_to root_path, alert: 'Access denied. You are not ad space provider'
+      end
     end
-  end
 
 
-  def slot_params
-    params.require(:slot).permit(:name)
-  end
+    def slot_params
+      params.require(:slot).permit(:name)
+    end
 
 end

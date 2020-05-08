@@ -13,16 +13,16 @@ class OrgBooking < ApplicationRecord
 
   private
 
-  def end_date_after_start_date
-    return if end_time.blank? || start_time.blank?
+    def end_date_after_start_date
+      return if end_time.blank? || start_time.blank?
 
-    if end_time < start_time
-      errors.add(:end_time, "must be after the start date")
+      if end_time < start_time
+        errors.add(:end_time, "must be after the start date")
+      end
     end
-  end
 
-  def run_org_booking_expiration_job
-    OrgBookingExpirationJob.set(wait_until: self.end_time.noon).perform_later(self)
-  end
+    def run_org_booking_expiration_job
+      OrgBookingExpirationJob.set(wait_until: self.end_time.noon).perform_later(self)
+    end
 
 end

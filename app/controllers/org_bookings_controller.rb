@@ -56,14 +56,14 @@ class OrgBookingsController < ApplicationController
 
   private
 
-  def org_booking_params
-    params.require(:org_booking).permit(:start_time, :end_time, :slot_id, :user_id, :ad_booking_id, :rent_amount, :status)
-  end
-
-  def authenticate_user_type
-    unless current_user.organisations?
-      redirect_to root_path, alert: 'Access denied. You are not an organisation'
+    def org_booking_params
+      params.require(:org_booking).permit(:start_time, :end_time, :slot_id, :user_id, :ad_booking_id, :rent_amount, :status)
     end
-  end
+
+    def authenticate_user_type
+      unless current_user.organisations?
+        redirect_to root_path, alert: 'Access denied. You are not an organisation'
+      end
+    end
 
 end
